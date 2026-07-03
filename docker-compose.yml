@@ -1,0 +1,49 @@
+services:
+  db:
+    image: postgres:15
+    container_name: lms_database
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=lms_db
+      - POSTGRES_USER=fiola
+      - POSTGRES_PASSWORD=rahasia
+
+  web:
+    build: .
+    container_name: lms_app
+    stdin_open: true
+    tty: true
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_started
+      redis:
+        condition: service_started
+      mongodb:
+        condition: service_started
+
+  redis:
+    image: redis:7-alpine
+    container_name: lms_redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  mongodb:
+    image: mongo:8
+    container_name: lms_mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
