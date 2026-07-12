@@ -35,7 +35,7 @@ Project ini adalah pengembangan Learning Management System (LMS) sederhana yang 
 
 ### 3. API Documentation (Swagger UI)
 
-![Swagger UI](screenshots/Swagger_UI_accessible_ api_docs.png)
+![Swagger UI](screenshots/Swagger_UI_accessible_api_docs.png)
 
 ---
 
